@@ -1,0 +1,11 @@
+{
+  "name": "hanvo-energy-website",
+  "version": "1.0.0",
+  "description": "广东汉柏能源集团官网（前端静态站 + 轻量后端：留言接口与管理页）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}
