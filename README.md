@@ -1,6 +1,6 @@
-# 广东汉柏能源集团 Streamlit 可编辑内部管理版
+# 广东汉柏能源集团 Streamlit 官网预览包
 
-这是官网的内部内容管理和预览工具，适合公司内部修改常用文字并查看效果。
+这是一个用于公司内部查阅官网的 Streamlit 包。内容和页面修改由项目维护人员统一处理，内部人员只需要运行或部署即可查看。
 
 ## 本地运行
 
@@ -9,32 +9,27 @@ pip install -r requirements.txt
 streamlit run streamlit_app.py
 ```
 
-## 可以编辑
+## 页面
 
-- 首页中文和英文标签、标题、简介
-- 公司地址、电话、邮箱
-- 6个业务板块的中文和英文名称
-- 修改后立即在官网预览中查看
-- 下载 `content_overrides.json`，提交到 Git 保存
+- 官网首页
+- 陆上风电项目文章
+- Onshore Wind Project Story
 
-## 不能直接编辑
+## 部署到 Streamlit Community Cloud
 
-页面布局、图片裁剪、动画、页面结构、表单功能等复杂内容，仍由项目维护人员统一修改。
-
-## Git 和部署
-
-重要修改请下载或保留 `content_overrides.json`，然后提交到 Git：
-
-```bash
-git add content_overrides.json
- git commit -m "update website content"
-git push
-```
-
-Streamlit Cloud 的入口文件填写：
+1. 把整个文件夹上传到 GitHub 私有仓库。
+2. 在 Streamlit Community Cloud 新建 App。
+3. 选择对应仓库和分支。
+4. Main file path 填写：
 
 ```text
 streamlit_app.py
 ```
 
-内部审核阶段请使用私有仓库并配置访问权限，不要直接公开公司资料和留言管理功能。
+5. 点击 Deploy。
+
+## 注意
+
+- 该包适合内部预览，不等于正式官网服务器。
+- Streamlit Community Cloud 默认可能是公开访问，内部审核阶段请使用私有仓库并设置访问权限。
+- 确定内容后，再把官网静态文件部署到正式服务器。
