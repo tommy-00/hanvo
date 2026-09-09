@@ -5,14 +5,44 @@
 (function(){
   "use strict";
 
-  /* ---------- 顶部导航：滚动变白底 ---------- */
+  /* ---------- 顶部导航：滚动变白底 + 动态高度 ---------- */
   var header = document.getElementById('siteHeader');
+  function syncHeaderHeight(){
+    if(!header){ return 0; }
+    var h = Math.ceil(header.getBoundingClientRect().height);
+    document.documentElement.style.setProperty('--header-height', h + 'px');
+    document.documentElement.style.scrollPaddingTop = h + 'px';
+    return h;
+  }
   function onScroll(){
     if(window.scrollY > 40){ header.classList.add('scrolled'); }
     else{ header.classList.remove('scrolled'); }
+    syncHeaderHeight();
+  }
+  function goToSection(id){
+    var target = document.getElementById(id);
+    if(!target){ return; }
+    /* 先切换导航状态，再读取真实高度，避免滚动态高度变化造成露出上一页 */
+    if(id === 'home'){ header.classList.remove('scrolled'); }
+    else{ header.classList.add('scrolled'); }
+    var h = syncHeaderHeight();
+    var top = target.getBoundingClientRect().top + window.pageYOffset - h;
+    window.scrollTo({top:Math.max(0, top), behavior:'smooth'});
+    try{ history.replaceState(null, '', '#' + id); }catch(e){}
   }
   window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', syncHeaderHeight, {passive:true});
+  if('ResizeObserver' in window && header){ new ResizeObserver(syncHeaderHeight).observe(header); }
   onScroll();
+  document.addEventListener('click', function(e){
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if(!a){ return; }
+    var id = a.getAttribute('href').slice(1);
+    if(document.getElementById(id)){
+      e.preventDefault();
+      goToSection(id);
+    }
+  }, true);
 
   /* ---------- 移动端抽屉菜单 ---------- */
   var nav = document.getElementById('mainNav');

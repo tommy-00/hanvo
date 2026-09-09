@@ -708,3 +708,6 @@ html{scroll-padding-top:60px}
 @media (min-width:1024px) and (min-height:600px) and (pointer:fine){html{scroll-padding-top:60px}}
 @media (min-width:1341px){html{scroll-padding-top:68px}}
 @media (min-width:1800px){html{scroll-padding-top:74px}}
+
+/* 锚点导航使用 JS 实时写入的导航栏高度，适配不同浏览器和滚动态 */
+html{scroll-padding-top:var(--header-height,60px)}
