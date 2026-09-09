@@ -1,26 +1,18 @@
-# 广东汉柏能源集团 Streamlit 正式预览部署包
+# Streamlit 导航修复补丁
 
-这是一个“正常官网展示版” Streamlit 包，部署后只显示官网本身，不显示额外的编辑器、标题栏或 Streamlit 操作面板。
+适用于之前的“广东汉柏能源集团官网-Streamlit部署包”。
 
-## 本地运行
+## 使用方法
 
-```bash
-pip install -r requirements.txt
-streamlit run streamlit_app.py
-```
+用本补丁里的 `streamlit_app.py` 替换原包根目录的同名文件，然后重新提交 Git 并重新部署即可。
 
-## 页面入口
+本补丁修复：
 
-- 官网首页：默认打开
-- 陆上风电文章：从首页点击“陆上风电”进入
-- 中英文：使用官网右上角语言按钮切换
+- 首页
+- 关于我们
+- 业务板块
+- 项目案例
+- 新闻中心
+- 联系我们
 
-## 部署
-
-上传整个文件夹到 GitHub 私有仓库，在 Streamlit Community Cloud 中选择：
-
-```text
-streamlit_app.py
-```
-
-内部审核阶段建议使用私有仓库和访问权限。内容成熟后，再把 `hanbo-website` 部署到正式服务器。
+在 Streamlit 内嵌页面中点击顶部导航后无法滚动的问题。
