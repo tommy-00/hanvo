@@ -1200,8 +1200,10 @@ html{scroll-padding-top:var(--header-height,60px)}
     /* 先切换导航状态，再读取真实高度，避免滚动态高度变化造成露出上一页 */
     if(id === 'home'){ header.classList.remove('scrolled'); }
     else{ header.classList.add('scrolled'); }
-    var h = syncHeaderHeight();
-    var top = target.getBoundingClientRect().top + window.pageYOffset - h;
+    syncHeaderHeight();
+    /* iframe（例如 Streamlit）自身也是一个滚动视口，目标直接对齐视口顶部，
+       由固定导航覆盖上方留白，避免再减一次导航高度而露出上一页。 */
+    var top = target.getBoundingClientRect().top + window.pageYOffset;
     window.scrollTo({top:Math.max(0, top), behavior:'smooth'});
     try{ history.replaceState(null, '', '#' + id); }catch(e){}
   }
