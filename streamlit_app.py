@@ -55,38 +55,8 @@ else:
     content = content.replace('href="index.html"', 'href="?page=home"')
     content = re.sub(r'href="(\?page=home(?:#[^"]+)?)"', r'href="\1" target="_top"', content)
 
-# 修复 Streamlit iframe 中的顶部锚点导航。普通官网里浏览器会自动滚动，
-# 但嵌入组件需要显式调用 scrollIntoView 才能稳定工作。
-iframe_fix = r"""
-<style>
-  html { scroll-behavior: smooth; }
-  section, [id] { scroll-margin-top: 72px; }
-</style>
-<script>
-(function(){
-  function bindAnchorNavigation(){
-    document.querySelectorAll('a[href^="#"]').forEach(function(a){
-      if(a.dataset.streamlitAnchorBound){ return; }
-      a.dataset.streamlitAnchorBound = '1';
-      a.addEventListener('click', function(ev){
-        var id = a.getAttribute('href').slice(1);
-        var target = document.getElementById(id);
-        if(!target){ return; }
-        ev.preventDefault();
-        target.scrollIntoView({behavior:'smooth', block:'start'});
-        try{ history.replaceState(null, '', '#' + id); }catch(e){}
-      }, true);
-    });
-  }
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', bindAnchorNavigation);
-  }else{
-    bindAnchorNavigation();
-  }
-})();
-</script>
-"""
-content = content.replace("</head>", iframe_fix + "</head>", 1)
+# 官网自己的 main.js 已经负责动态读取导航高度和锚点滚动，
+# Streamlit 外层不再重复绑定滚动脚本，避免两个滚动逻辑互相叠加。
 
 # 官网首页按整屏高度展示；文章页给更长的阅读区域。
 height = 900 if page == "home" else 1100
